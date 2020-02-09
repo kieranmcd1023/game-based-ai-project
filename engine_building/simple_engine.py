@@ -5,13 +5,14 @@ import random
 import time
 from engine0 import Engine0 # totally random moves
 from engine1 import Engine1 # always try to capture pieces
+from engine2 import Engine2 # MinMax strategy
 
 CPU_VS_CPU = True
 
 if __name__ == '__main__':
 	# Initialize engines
-	e0 = Engine0()
-	e1 = Engine1()
+	e0 = Engine1() # White
+	e1 = Engine2() # Black
 
 	# Initialize board
 	board = chess.Board()

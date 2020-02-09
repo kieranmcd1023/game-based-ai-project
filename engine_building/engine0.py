@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 # Engine 0 - totally random moves
 
 import chess

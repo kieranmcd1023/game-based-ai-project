@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 # Engine 1 - Greedy Algorithm
 
 import chess
