@@ -32,7 +32,7 @@ The scoring system for the algorithm uses the following scores:
 
 From this, a proper score can be calculated for the min-max algorithm.
 
-Dependencies/Configurations:
+# Dependencies/Configurations:
 
 To operate this bot, the system requires python3, pip, and python-chess. Pip can be installed using the following command:
 - sudo apt install python-pip (Linux)
