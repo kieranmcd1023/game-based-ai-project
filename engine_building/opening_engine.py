@@ -12,7 +12,7 @@ class OpeningEngine:
 
 	def make_move(self, board):
 		try:
-			next_move = self.reader.weighted_choice(board).move
+			next_move = self.reader.weighted_choice(board).move()
 			print(next_move)
 			board.push(next_move)
 		except:
@@ -26,4 +26,4 @@ if __name__ == '__main__':
 		oe.make_move(board)
 	#with chess.polyglot.open_reader("gm2001.bin") as reader:
 	#	for entry in oe.reader.find_all(board):
-	#		print(entry.move, entry.weight, entry.learn)
+	#		print(entry.move(), entry.weight, entry.learn)
