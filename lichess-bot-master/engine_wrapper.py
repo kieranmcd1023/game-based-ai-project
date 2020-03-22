@@ -2,6 +2,7 @@ import os
 import chess
 import chess.xboard
 import chess.uci
+#import chess.engine
 import backoff
 import subprocess
 
@@ -20,7 +21,7 @@ def create_engine(config, board):
 
     if engine_type == "xboard":
         return XBoardEngine(board, commands, cfg.get("xboard_options", {}) or {}, silence_stderr)
-
+    #print('gonna be uci')
     return UCIEngine(board, commands, cfg.get("uci_options", {}) or {}, silence_stderr)
 
 
@@ -64,12 +65,16 @@ class EngineWrapper:
 class UCIEngine(EngineWrapper):
 
     def __init__(self, board, commands, options, silence_stderr=False):
+#        print('creating uci engine')
         commands = commands[0] if len(commands) == 1 else commands
         self.go_commands = options.get("go_commands", {})
-
+        print('before engine')
         self.engine = chess.uci.popen_engine(commands, stderr = subprocess.DEVNULL if silence_stderr else None)
+        print('after engine before uci')
+#        print(commands)
+#        print(self.engine.name)
         self.engine.uci()
-
+        print('past uci')
         if options:
             self.engine.setoption(options)
 
@@ -81,7 +86,7 @@ class UCIEngine(EngineWrapper):
 
         info_handler = chess.uci.InfoHandler()
         self.engine.info_handlers.append(info_handler)
-
+        print('finish init')
 
     def first_search(self, board, movetime):
         self.engine.position(board)
