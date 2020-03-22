@@ -3,6 +3,7 @@
 # Imports
 import chess
 from engine2 import Engine2
+from mid_winning import MidWinning
 
 # Pieces: Pawns, Knights, Bishops, Rooks, Queens
 PIECE_VALUES = {1:1, 2:3, 3:3, 4:5, 5:9}
@@ -20,7 +21,7 @@ class ControlMechanism:
 		self.color = color
 		self.state = 0
 		self.state_0 = Engine2()
-		self.state_1 = Engine2()
+		self.state_1 = MidWinning()
 		self.state_2 = Engine2()
 		self.state_3 = Engine2()
 		self.state_4 = Engine2()
@@ -54,7 +55,7 @@ class ControlMechanism:
 		elif our_points < 13 or opp_points < 13:
 			self.state = 3
 		elif our_points <= opp_points:
-			self.state = 1
+			self.state = 2
 
 	def midgame_not_winning_state(self, board):
 		# Transitions out:
@@ -68,7 +69,7 @@ class ControlMechanism:
 		elif our_points < 13 or opp_points < 13:
 			self.state = 3
 		elif our_points > opp_points:
-			self.state = 2
+			self.state = 1
 
 	def endgame_state(self, board):
 		# Transitions out:
