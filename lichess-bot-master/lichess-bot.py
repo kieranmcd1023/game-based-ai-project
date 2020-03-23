@@ -305,7 +305,10 @@ if __name__ == "__main__":
         is_bot = upgrade_account(li)
 
     if is_bot:
-        print(CONFIG)
+#        print(CONFIG)
+        print('------------------------------------------')
+        print('Challenge PeterQuillBot on lichess.com now')
+        print('------------------------------------------')
         engine_factory = partial(engine_wrapper.create_engine, CONFIG)
         start(li, user_profile, engine_factory, CONFIG)
     else:

@@ -68,13 +68,13 @@ class UCIEngine(EngineWrapper):
 #        print('creating uci engine')
         commands = commands[0] if len(commands) == 1 else commands
         self.go_commands = options.get("go_commands", {})
-        print('before engine')
+#        print('before engine')
         self.engine = chess.uci.popen_engine(commands, stderr = subprocess.DEVNULL if silence_stderr else None)
-        print('after engine before uci')
+#        print('after engine before uci')
 #        print(commands)
 #        print(self.engine.name)
         self.engine.uci()
-        print('past uci')
+#        print('past uci')
         if options:
             self.engine.setoption(options)
 
@@ -86,7 +86,7 @@ class UCIEngine(EngineWrapper):
 
         info_handler = chess.uci.InfoHandler()
         self.engine.info_handlers.append(info_handler)
-        print('finish init')
+#        print('finish init')
 
     def first_search(self, board, movetime):
         self.engine.position(board)
