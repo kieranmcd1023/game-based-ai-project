@@ -34,10 +34,10 @@ From this, a proper score can be calculated for the min-max algorithm.
 
 # Dependencies/Configurations:
 
-To operate this bot, the system requires python3, pip, and python-chess. Pip can be installed using the following command:
+To operate this bot, the system requires python3, pip, backoff, and python-chess. Pip can be installed using the following command:
 - sudo apt install python-pip (Linux)
 - get-pip.py (Mac)
 - python get-pip.py (Windows)
 
-The package python-chess is installed in the Makefile using pip. 
+The package python-chess (0.24.1 is required) is installed in the Makefile using pip. The backoff package (1.7.1) is also installed in the Makefile using pip. Though this should implement everything necessary, check for potential further package installments under lichess-bot-master/requirements.txt for any potential further requirements.
 
