@@ -15,10 +15,11 @@ class MidWinning:
 	def __init__(self):
 		pass
 	def score_board(self, board, color):
-		score = 0
+		opponent_score = 0
+		user_score = 0
 		for key in PIECE_VALUES:
 			opponent_score += PIECE_VALUES[key] * len(list(board.pieces(key, color)))
-            user_score += PIECE_VALUES[key] * len(list(board.pieces(key, not color)))
+			user_score += PIECE_VALUES[key] * len(list(board.pieces(key, not color)))
 		return opponent_score - user_score
 	def max_move(self, board): # give the 'best' move based on score
 		best_score = DEFAULT_POINTS
@@ -33,26 +34,26 @@ class MidWinning:
 				best_score = temp_score
 				best_options = []
 				best_options.append(move) # reset list and add the new move
-        return random.choice(best_options)
+		return random.choice(best_options)
 
-    def best_variance(options):
-        variance_score = -1
-        mid_winning_options = []
-        for move in options:
-            temp_board = board.copy()
-            temp_board.push(move)
-            user_variance = self.score_board(temp_board, temp_board.turn)
-            opponent_best_move = self.max_move(temp_board)
-            temp_board_next = temp_board.copy()
-            temp_board_next.push(opponent_best_move)
-            opponent_variance = self.score_board(tempt_board_next, temp_board_next.turn)
-            if (user_variance + opponent_variance) == variance_score:
-                mid_winning_options.append(move)
-            elif (user_variance + opponent_variance) > variance_score:
-                variance_score = user_variance + opponent_variance
-                mid_winning_options = []
-                mid_winning_options.append(move)
-        return mid_winning_options
+	def best_variance(self, options, board):
+		variance_score = -1000000
+		mid_winning_options = []
+		for move in options:
+			temp_board = board.copy()
+			temp_board.push(move)
+			user_variance = self.score_board(temp_board, temp_board.turn)
+			opponent_best_move = self.max_move(temp_board)
+			temp_board_next = temp_board.copy()
+			temp_board_next.push(opponent_best_move)
+			opponent_variance = self.score_board(temp_board_next, temp_board_next.turn)
+			if (user_variance + opponent_variance) == variance_score:
+				mid_winning_options.append(move)
+			elif (user_variance + opponent_variance) > variance_score:
+				variance_score = user_variance + opponent_variance
+				mid_winning_options = []
+				mid_winning_options.append(move)
+		return mid_winning_options
 
 
 
@@ -78,8 +79,9 @@ class MidWinning:
 				opponent_worst_best_score = opponent_best_move_score
 				opponent_worst_best_options = []
 				opponent_worst_best_options.append(move)
-        if(len(opponent_worst_best_options) > 1)
-            opponent_worst_best_options = self.best_variance(opponent_worst_best_options)
+		if len(opponent_worst_best_options) > 1:
+			#print(opponent_worst_best_options)
+			opponent_worst_best_options = self.best_variance(opponent_worst_best_options, board)
 		board.push(random.choice(opponent_worst_best_options))
 
 if __name__ == '__main__':
