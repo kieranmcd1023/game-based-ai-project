@@ -6,9 +6,9 @@ engine:                      # engine settings
   name: "uci_engine.py"        # binary name of the engine to use
   protocol: "uci"            # "uci" or "xboard"
   polyglot:
-    enabled: false           # activate polyglot book
+    enabled: true           # activate polyglot book
     book:
-      standard: "engines/book.bin" # book file path of standard chess
+      standard: "engines/engine_building/gm2001.bin" # book file path of standard chess
 #      atomic: "atomic book path"
 #      giveaway: "antichess book path"
 #      crazyhouse: "crazyhouse book path"

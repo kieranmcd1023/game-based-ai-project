@@ -2,11 +2,11 @@
 
 import chess
 import random
-from engine2 import Engine2
+from high_level_strategy import ControlMechanism
 
 if __name__ == '__main__':
 	board = chess.Board()
-	engine = Engine2()
+	engine = ControlMechanism()
 	# Loop
 	while True:
 		# Get input

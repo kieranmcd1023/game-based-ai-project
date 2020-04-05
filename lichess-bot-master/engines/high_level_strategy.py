@@ -17,10 +17,10 @@ DEFAULT_POINTS = 39
 # 	- Killshot State (aggressively pursue ending the game, winning or tying)
 
 class ControlMechanism:
-	def __init__(self, color):
-		self.color = color
-		self.state = 0
-		self.state_0 = Engine2()
+	def __init__(self):
+		#self.color = color
+		self.state = 1
+		self.state_0 = Engine2() # irrelevant - remove later but keep for now
 		self.state_1 = MidWinning()
 		self.state_2 = Engine2()
 		self.state_3 = Engine2()
@@ -33,23 +33,23 @@ class ControlMechanism:
 			score += PIECE_VALUES[key] * len(list(board.pieces(key, color)))
 		return score
 
-	def opening_state(self, board):
+	#def opening_state(self, board):
 		# Transitions out:
 		# 	- Go to one of the midgame states if number of moves > 4
 		# 	- [Future]: transition out when book openings exhausted
-		if board.fullmove_number > 4:
-			if self.score_board(board, self.color) > self.score_board(board, not self.color):
-				self.state = 1
-			else:
-				self.state = 2
+	#	if board.fullmove_number > 4:
+	#		if self.score_board(board, self.color) > self.score_board(board, not self.color):
+	#			self.state = 1
+	#		else:
+	#			self.state = 2
 
 	def midgame_winning_state(self, board):
 		# Transitions out:
 		# 	- Go to killshot state if a player has twice as many points as the other (or more)
 		# 	- Go to endgame state if either player has fewer than 13 points left
 		# 	- Go to midgame-not-winning state if tied or losing in points
-		our_points = self.score_board(board, self.color)
-		opp_points = self.score_board(board, not self.color)
+		our_points = self.score_board(board, board.turn) #self.color)
+		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
 		elif our_points < 13 or opp_points < 13:
@@ -62,8 +62,8 @@ class ControlMechanism:
 		# 	- Go to killshot state if a player has twice as many points as the other (or more)
 		# 	- Go to endgame state if either player has fewer than 13 points left
 		# 	- Go to midgame-winning state if winning in points
-		our_points = self.score_board(board, self.color)
-		opp_points = self.score_board(board, not self.color)
+		our_points = self.score_board(board, board.turn) #self.color)
+		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
 		elif our_points < 13 or opp_points < 13:
@@ -74,8 +74,8 @@ class ControlMechanism:
 	def endgame_state(self, board):
 		# Transitions out:
 		# 	- Go to killshot state if a player has twice as many poins as the other (or more)
-		our_points = self.score_board(board, self.color)
-		opp_points = self.score_board(board, not self.color)
+		our_points = self.score_board(board, board.turn) #self.color)
+		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
 
@@ -84,8 +84,8 @@ class ControlMechanism:
 		# 	- Go to endgame state if neither player has twice as many points as the other (or more), and either player has fewer than 13 points
 		#	- Go to midgame-winning state if neither player has twice as many points as the other (or more), and we have more points
 		# 	- Go to midgame-not-winning state if neither player has twice as many points as the other (or more), and we have fewer points (or the same amount)
-		our_points = self.score_board(board, self.color)
-		opp_points = self.score_board(board, not self.color)
+		our_points = self.score_board(board, board.turn) #self.color)
+		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points < 2 * opp_points and opp_points < 2 * our_points:
 			if our_points < 13 or opp_points < 13:
 				self.state = 4
@@ -99,9 +99,9 @@ class ControlMechanism:
 		self.engine_array[self.state].make_move(board)
 
 		# Transition into new state, or stay the same
-		if self.state == 0:
-			self.opening_state(board)
-		elif self.state == 1:
+		#if self.state == 0:
+		#	self.opening_state(board)
+		if self.state == 1:
 			self.midgame_winning_state(board)
 		elif self.state == 2:
 			self.midgame_not_winning_state(board)

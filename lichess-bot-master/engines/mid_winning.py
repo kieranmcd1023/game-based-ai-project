@@ -37,6 +37,23 @@ class MidWinning:
 		return random.choice(best_options)
 
 	def best_variance(self, options, board):
+		# Trades are good here - the less cluttered the board, the better
+		least_cluttered_board_moves = [options[0]]
+		least_cluttered_board_score = -1
+		for move in options[1:]:
+			total_piece_score = 0
+			for key in PIECE_VALUES:
+				total_piece_score += PIECE_VALUES[key] * len(list(board.pieces(key, True)))
+				total_piece_score += PIECE_VALUES[key] * len(list(board.pieces(key, False)))
+			if total_piece_score == least_cluttered_board_score:
+				least_cluttered_board_moves.append(move)
+			elif total_piece_score > least_cluttered_board_score:
+				least_cluttered_board_moves = []
+				least_cluttered_board_moves.append(move)
+				least_cluttered_board_score = total_piece_score
+		return least_cluttered_board_moves
+
+	def broken_best_variance(self, options, board):
 		variance_score = -1000000
 		mid_winning_options = []
 		for move in options:
@@ -59,7 +76,7 @@ class MidWinning:
 
 	def make_move(self, board):
 		#board.push(self.max_move(board))
-		opponent_worst_best_score = -1
+		opponent_worst_best_score = -1000000
 		opponent_worst_best_options = []
 		for move in list(board.legal_moves):
 			temp_board_0 = board.copy()

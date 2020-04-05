@@ -15,12 +15,10 @@ class Engine2:
 	def __init__(self):
 		pass
 	def score_board(self, board, color):
-		opponent_score = 0
-		user_score = 0
+		score = 0
 		for key in PIECE_VALUES:
-			opponent_score += PIECE_VALUES[key] * len(list(board.pieces(key, color)))
-			user_score += PIECE_VALUES[key] * len(list(board.pieces(key, not color)))
-		return opponent_score - user_score
+			score += PIECE_VALUES[key] * len(list(board.pieces(key, color)))
+		return score
 	def max_move(self, board): # give the 'best' move based on score
 		best_score = DEFAULT_POINTS
 		best_options = []
