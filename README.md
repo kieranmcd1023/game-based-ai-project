@@ -4,6 +4,7 @@ This bot is a chess bot created in Python using a built-in "chess" library. This
 
 1. Opening State
 - Looks at how the opponent opens and reacts accordingly. This will be done using the chess library's "polyglot" function, which takes all of the possible openings and makes the proper move according to how the game opens. Once the opening has been handled (or for this iteration, once the engine makes four moves), the bot calculates their score based off of a weighted piece system and switches into another state.
+- UPDATE: the new opening state is much more streamlined. Moves are read from the gm2001 book (located in the engines/engine_building directory), and when book moves are exhausted, the bot now transitions seamlessly into the midgame states.
 
 2. Mid-Game Winning State
 
@@ -31,6 +32,10 @@ The scoring system for the algorithm uses the following scores:
 - Queen: 9 points
 
 From this, a proper score can be calculated for the min-max algorithm.
+
+# Lichess Connection
+The bot is fully able to accept challenges and play games on the Lichess platform.
+UPDATE: progress is being made to get the bot to challenge other bots automatically. This process is difficult because Lichess has removed the bot search functionality, so we will have to scrape the page for Bot names, and challenge them directly as friends.
 
 # Dependencies/Configurations:
 
