@@ -3,10 +3,11 @@
 import chess
 import random
 import time
-from high_level_strategy import ControlMechanism
+#from high_level_strategy import ControlMechanism
 from engine0 import Engine0 # totally random moves
 from engine1 import Engine1 # always try to capture pieces
-from engine2 import Engine2 # MinMax strategy
+#from engine2 import Engine2 # MinMax strategy
+from monte_carlo_engine import MonteCarloEngine
 
 CPU_VS_CPU = True
 
@@ -17,11 +18,11 @@ def show_board(board):
 
 if __name__ == '__main__':
 	# Initialize control mechansim
-	fsm = ControlMechanism(chess.BLACK)
+	#fsm = ControlMechanism(chess.BLACK)
 
 	# Initialize engines
 	e0 = Engine1() # White
-	e1 = Engine2() # Black
+	e1 = MonteCarloEngine() # Black
 
 	# Initialize board
 	board = chess.Board()
@@ -49,7 +50,8 @@ if __name__ == '__main__':
 		# Calculate bot move
 		if board.is_game_over():
 			break
-		fsm.make_move(board)
+		#fsm.make_move(board)
+		e1.make_move(board)
 
 	show_board(board)
 	print('Result: ', board.result())

@@ -3,6 +3,7 @@
 # Imports
 import chess
 from engine2 import Engine2
+from deeperengine import DeeperEngine
 from mid_winning import MidWinning
 
 # Pieces: Pawns, Knights, Bishops, Rooks, Queens
@@ -20,11 +21,11 @@ class ControlMechanism:
 	def __init__(self):
 		#self.color = color
 		self.state = 1
-		self.state_0 = Engine2() # irrelevant - remove later but keep for now
+		self.state_0 = DeeperEngine()
 		self.state_1 = MidWinning()
-		self.state_2 = Engine2()
-		self.state_3 = Engine2()
-		self.state_4 = Engine2()
+		self.state_2 = DeeperEngine()
+		self.state_3 = DeeperEngine()
+		self.state_4 = DeeperEngine()
 		self.engine_array = [self.state_0, self.state_1, self.state_2, self.state_3, self.state_4]
 
 	def score_board(self, board, color):

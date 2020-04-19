@@ -46,3 +46,6 @@ To operate this bot, the system requires python3, pip, backoff, and python-chess
 
 The package python-chess (0.24.1 is required) is installed in the Makefile using pip. The backoff package (1.7.1) is also installed in the Makefile using pip. Though this should implement everything necessary, check for potential further package installments under lichess-bot-master/requirements.txt for any potential further requirements.
 
+# Current Status of the Bot:
+- Our bot now allows for a flexible depth for future moves ahead searches. This variable can be adjusted in the deeperengine.py engine, under the DEPTH constant
+- What's left: Endgame. We need to either program in specific expert behavior, or use endgame tables to finish out the game. Also, adjust midgame winning/not winning to use our flexible depth search 
