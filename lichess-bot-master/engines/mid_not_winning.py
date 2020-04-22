@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Deeper Search Algorithm (Mid-Game, Winning)
+# Deeper Search Algorithm (Mid-Game, Not Winning)
 
 # This engine makes moves by looking several moves into the future, and
 # uses MinMax to choose the best (board scoring is based on piece value)
@@ -12,7 +12,7 @@ PIECE_VALUES = {1:1, 2:3, 3:3, 4:5, 5:9}
 DEFAULT_POINTS = 39
 DEPTH = 3
 
-class MidWinning:
+class MidNotWinning:
 	def __init__(self):
 		pass
 	def score_board(self, board, color):
@@ -37,24 +37,24 @@ class MidWinning:
 				best_options.append(move) # reset list and add the new move
 		return random.choice(best_options)
 
-	def best_variance(self, options, board):
-		# Trades are good here - the less cluttered the board, the better
-		least_cluttered_board_moves = []
-		least_cluttered_board_score = 1000000
+	def least_variance(self, options, board):
+		# Trades are considered bad here - the more cluttered the board, the better
+		most_cluttered_board_moves = []
+		most_cluttered_board_score = -1
 		for move in options:
 			temp_board = board.copy()
-			temp_board.push(move)
+			board.push(move)
 			total_piece_score = 0
 			for key in PIECE_VALUES:
-				total_piece_score += PIECE_VALUES[key] * len(list(temp_board.pieces(key, True)))
-				total_piece_score += PIECE_VALUES[key] * len(list(temp_board.pieces(key, False)))
-			if total_piece_score == least_cluttered_board_score:
-				least_cluttered_board_moves.append(move)
-			elif total_piece_score < least_cluttered_board_score:
-				least_cluttered_board_moves = []
-				least_cluttered_board_moves.append(move)
-				least_cluttered_board_score = total_piece_score
-		return least_cluttered_board_moves
+				total_piece_score += PIECE_VALUES[key] * len(list(board.pieces(key, True)))
+				total_piece_score += PIECE_VALUES[key] * len(list(board.pieces(key, False)))
+			if total_piece_score == most_cluttered_board_score:
+				most_cluttered_board_moves.append(move)
+			elif total_piece_score > most_cluttered_board_score:
+				most_cluttered_board_moves = []
+				most_cluttered_board_moves.append(move)
+				most_cluttered_board_score = total_piece_score
+		return most_cluttered_board_moves
 
 	def make_move(self, board):
 		best_move = self.make_move_recursive(board, DEPTH, board.turn)[0]
@@ -100,7 +100,7 @@ class MidWinning:
 					best_moves = []
 					best_moves.append(move)
 		if len(best_moves) > 1:
-			best_moves = self.best_variance(best_moves, board)
+			best_moves = self.least_variance(best_moves, board)
 		return [random.choice(best_moves), best_score]
 
 if __name__ == '__main__':

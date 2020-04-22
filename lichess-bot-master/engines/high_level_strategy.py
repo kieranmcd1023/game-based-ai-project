@@ -20,8 +20,8 @@ DEFAULT_POINTS = 39
 class ControlMechanism:
 	def __init__(self):
 		#self.color = color
-		self.state = 1
-		self.state_0 = DeeperEngine()
+		self.state = 2
+		self.state_0 = '' # Opening State uses the book now!
 		self.state_1 = MidWinning()
 		self.state_2 = DeeperEngine()
 		self.state_3 = DeeperEngine()
@@ -53,10 +53,13 @@ class ControlMechanism:
 		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
+			print('Going to Killshot State (was Midgame Winning)')
 		elif our_points < 13 or opp_points < 13:
 			self.state = 3
+			print('Going to Endgame State (was Midgame Winning)')
 		elif our_points <= opp_points:
 			self.state = 2
+			print('Going to Midgame Not Winning State (was Midgame Winning)')
 
 	def midgame_not_winning_state(self, board):
 		# Transitions out:
@@ -67,10 +70,13 @@ class ControlMechanism:
 		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
+			print('Going to Killshot State (was Midgame Not Winning)')
 		elif our_points < 13 or opp_points < 13:
 			self.state = 3
+			print('Going to Endgame State (was Midgame Not Winning)')
 		elif our_points > opp_points:
 			self.state = 1
+			print('Going to Midgame Winning State (was Midgame Not Winning)')
 
 	def endgame_state(self, board):
 		# Transitions out:
@@ -79,6 +85,7 @@ class ControlMechanism:
 		opp_points = self.score_board(board, not board.turn) #self.color)
 		if our_points >= 2 * opp_points or opp_points >= 2 * our_points:
 			self.state = 4
+			print('Going to Killshot State (was Endgame)')
 
 	def killshot_state(self, board):
 		# Transitions out:
@@ -90,14 +97,17 @@ class ControlMechanism:
 		if our_points < 2 * opp_points and opp_points < 2 * our_points:
 			if our_points < 13 or opp_points < 13:
 				self.state = 4
+				print('Going to Endgame State (was Killshot)')
 			elif our_points > opp_points:
 				self.state = 1
+				print('Going to Midgame Winning State (was Killshot)')
 			else:
 				self.state = 2
+				print('Going to Midgame Not Winning State (was Killshot)')
 
 	def make_move(self, board):
 		# Make the move
-		self.engine_array[self.state].make_move(board)
+		#self.engine_array[self.state].make_move(board)
 
 		# Transition into new state, or stay the same
 		#if self.state == 0:
@@ -111,3 +121,5 @@ class ControlMechanism:
 		elif self.state == 4:
 			self.killshot_state(board)
 
+		# Make the move
+		self.engine_array[self.state].make_move(board)
