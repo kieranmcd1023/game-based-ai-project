@@ -5,6 +5,8 @@ import chess
 from engine2 import Engine2
 from deeperengine import DeeperEngine
 from mid_winning import MidWinning
+from mid_not_winning import MidNotWinning
+from endgame import Endgame
 
 # Pieces: Pawns, Knights, Bishops, Rooks, Queens
 PIECE_VALUES = {1:1, 2:3, 3:3, 4:5, 5:9}
@@ -23,8 +25,8 @@ class ControlMechanism:
 		self.state = 2
 		self.state_0 = '' # Opening State uses the book now!
 		self.state_1 = MidWinning()
-		self.state_2 = DeeperEngine()
-		self.state_3 = DeeperEngine()
+		self.state_2 = MidNotWinning()
+		self.state_3 = Endgame()
 		self.state_4 = DeeperEngine()
 		self.engine_array = [self.state_0, self.state_1, self.state_2, self.state_3, self.state_4]
 

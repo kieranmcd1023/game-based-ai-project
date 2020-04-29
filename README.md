@@ -16,7 +16,7 @@ This bot is a chess bot created in Python using a built-in "chess" library. This
 
 4. Endgame State
 
-- This state is reached when either player has less than or equal to 13 points (more on that below). In this case, the engine will be looking for ways to reach checkmate.
+- This state is reached when either player has less than or equal to 13 points (more on that below). In this case, the engine will be looking for ways to reach checkmate. UPDATE: Endgame now prioritizes pawn advancement over other random moves when tiebreaking between multiple best moves.
 
 5. Killshot State
 
@@ -48,4 +48,5 @@ The package python-chess (0.24.1 is required) is installed in the Makefile using
 
 # Current Status of the Bot:
 - Our bot now allows for a flexible depth for future moves ahead searches. This variable can be adjusted in the deeperengine.py engine, under the DEPTH constant
-- What's left: Endgame. We need to either program in specific expert behavior, or use endgame tables to finish out the game. Also, adjust midgame winning/not winning to use our flexible depth search 
+- What's left (UPDATE: this is completed!): Endgame. We need to either program in specific expert behavior, or use endgame tables to finish out the game. Also, adjust midgame winning/not winning to use our flexible depth search 
+- What's left: update the Killshot state to prioritize ending the game even more than it does already
