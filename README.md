@@ -1,4 +1,6 @@
-# High-control mechanism
+## PeterQuill Chess Bot
+
+# High-Level Overview
 
 This bot is a chess bot created in Python using a built-in "chess" library. This bot is implemented using various min-max algorithms and an FSM structure that switches between multiple states:
 
